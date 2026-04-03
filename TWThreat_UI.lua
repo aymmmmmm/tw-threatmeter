@@ -388,8 +388,10 @@ function TWTUI.CreateMainWindow()
     if TWTUI.settings then
       if TWTUI.settings:IsShown() then
         TWTUI.settings:Hide()
+        TWT.testBars(false)
       else
         TWTUI.settings:Show()
+        TWT.testBars(true)
       end
     end
   end)
@@ -1020,9 +1022,7 @@ function TWTUI.CreateFullScreenGlow()
 
   frame.texture = frame:CreateTexture("TWTFullScreenGlowTexture", "BACKGROUND")
   frame.texture:SetTexture("Interface\\AddOns\\TWThreat\\images\\fs_glow")
-  frame.texture:SetWidth(GetScreenWidth())
-  frame.texture:SetHeight(GetScreenHeight())
-  frame.texture:SetPoint("CENTER", UIParent, "CENTER", 0, 0)
+  frame.texture:SetAllPoints(frame)
   frame.texture:SetVertexColor(1, 0, 0, 0.6)
   frame.texture:SetBlendMode("ADD")
 

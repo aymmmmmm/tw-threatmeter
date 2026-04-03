@@ -1337,7 +1337,15 @@ function TWT.updateUI(from)
                     TWT.barAnimator:animateTo(index, data.perc)
                 end
 
-                bar:SetStatusBarColor(1, 0.2, 0.2)
+                local cr, cg, cb = 1, 0.2, 0.2
+                local sat = (TWT_CONFIG.saturation or 10) / 10
+                if sat ~= 1 then
+                    local avg = (cr + cg + cb) / 3
+                    cr = math.max(0, math.min(1, avg + (cr - avg) * sat))
+                    cg = math.max(0, math.min(1, avg + (cg - avg) * sat))
+                    cb = math.max(0, math.min(1, avg + (cb - avg) * sat))
+                end
+                bar:SetStatusBarColor(cr, cg, cb)
                 bar.bg:SetStatusBarColor(0.2, 0.2, 0.2, 0.5)
 
             elseif name == TWT.AGRO then
@@ -1345,17 +1353,31 @@ function TWT.updateUI(from)
                 TWT.barAnimator:animateTo(index, nil)
                 bar:SetValue(100)
 
+                local cr, cg, cb = 0, 1, 0
                 local colorLimit = 50
 
                 if TWT.threats[TWT.name].perc >= 0 and TWT.threats[TWT.name].perc < colorLimit then
-                    bar:SetStatusBarColor(TWT.threats[TWT.name].perc / colorLimit, 1, 0, 0.9)
+                    cr = TWT.threats[TWT.name].perc / colorLimit
+                    cg = 1
+                    cb = 0
                 elseif TWT.threats[TWT.name].perc >= colorLimit then
-                    bar:SetStatusBarColor(1, 1 - (TWT.threats[TWT.name].perc - colorLimit) / colorLimit, 0, 0.9)
+                    cr = 1
+                    cg = 1 - (TWT.threats[TWT.name].perc - colorLimit) / colorLimit
+                    cb = 0
                 end
 
                 if TWT.tankName == TWT.name then
-                    bar:SetStatusBarColor(1, 0, 0, 1)
+                    cr, cg, cb = 1, 0, 0
                 end
+
+                local sat = (TWT_CONFIG.saturation or 10) / 10
+                if sat ~= 1 then
+                    local avg = (cr + cg + cb) / 3
+                    cr = math.max(0, math.min(1, avg + (cr - avg) * sat))
+                    cg = math.max(0, math.min(1, avg + (cg - avg) * sat))
+                    cb = math.max(0, math.min(1, avg + (cb - avg) * sat))
+                end
+                bar:SetStatusBarColor(cr, cg, cb, 0.9)
 
             else
 
@@ -1382,7 +1404,6 @@ function TWT.updateUI(from)
             end
 
             if name == TWT.name then
-                bar:SetStatusBarColor(1, 0.2, 0.2, 1)
                 TWT.updateTargetFrameThreatIndicators(data.perc)
             end
 
