@@ -4,6 +4,12 @@ Turtle WoW 仇恨监控插件
 使用条件：处于`小队`或`团队`中，攻击`精英`怪物或`Boss`。
 <br>
 
+## 安装说明
+
+1. 下载本项目
+2. 将文件夹放入 WoW 目录：`Interface\AddOns\`
+3. **文件夹必须命名为 `TWThreat`**（GitHub 下载的 zip 解压后需将 `tw-threatmeter-main` 重命名）
+
 ## 更新日志
 
 ### 1.4.0 (anym 分支)

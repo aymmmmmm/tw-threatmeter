@@ -299,7 +299,7 @@ eventHandlers.UNIT_MODEL_CHANGED = function()
 end
 
 eventHandlers.ADDON_LOADED = function()
-    if arg1 == 'TWThreat' then
+    if string.lower(arg1) == 'twthreat' then
         return TWT.init()
     end
 end
