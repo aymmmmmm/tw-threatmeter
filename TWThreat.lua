@@ -163,6 +163,7 @@ SlashCmdList["TWT"] = function(msg)
         p("  /twt texture [1-4] |cffcccccc- " .. L["Set bar texture"])
         p("  /twt spacing [0-10] |cffcccccc- " .. L["Set bar spacing"])
         p("  /twt pastel  |cffcccccc- " .. L["Toggle pastel colors"])
+        p("  /twt saturation [1-20] |cffcccccc- " .. L["Set color saturation"])
         p("  /twt backdrop |cffcccccc- " .. L["Toggle backdrop"])
         p("  /twt scale [50-150] |cffcccccc- " .. L["Set window scale"])
         p("  /twt tankmode |cffcccccc- " .. L["Toggle tank mode"])
@@ -222,6 +223,16 @@ SlashCmdList["TWT"] = function(msg)
         TWT_CONFIG.pastel = not TWT_CONFIG.pastel
         TWTUI.settingsCallback("pastel", TWT_CONFIG.pastel)
         p(L["Pastel Colors"] .. ": " .. (TWT_CONFIG.pastel and "on" or "off"))
+        return
+    elseif cmd == "saturation" then
+        local n = tonumber(args)
+        if n and n >= 1 and n <= 20 then
+            TWT_CONFIG.saturation = n
+            TWTUI.settingsCallback("saturation", TWT_CONFIG.saturation)
+            p(L["Color Saturation"] .. ": " .. n)
+        else
+            p("|cffff5511" .. L["Valid options:"] .. " 1-20")
+        end
         return
     elseif cmd == "backdrop" then
         TWT_CONFIG.backdrop = not TWT_CONFIG.backdrop
@@ -532,6 +543,7 @@ function TWT.init()
     if TWT_CONFIG.tankMode == nil then TWT_CONFIG.tankMode = false end
     if TWT_CONFIG.lock == nil then TWT_CONFIG.lock = false end
     if TWT_CONFIG.pastel == nil then TWT_CONFIG.pastel = false end
+    if TWT_CONFIG.saturation == nil then TWT_CONFIG.saturation = 10 end
     if TWT_CONFIG.debug == nil then TWT_CONFIG.debug = false end
 
     TWT.units = TWT_CONFIG.units
@@ -572,7 +584,7 @@ function TWT.init()
             TWTUI.mainWindow:SetHeight(TWT_CONFIG.barHeight * bars + headerH + (bars == 0 and 2 or 3))
             TWT.setMinMaxResize()
             TWT.updateUI('barHeight changed')
-        elseif key == 'texture' or key == 'spacing' or key == 'pastel' then
+        elseif key == 'texture' or key == 'spacing' or key == 'pastel' or key == 'saturation' then
             TWT.updateUI('appearance changed')
         elseif key == 'combatAlpha' or key == 'oocAlpha' then
             TWTUI.mainWindow:SetAlpha(UnitAffectingCombat('player') and TWT_CONFIG.combatAlpha or TWT_CONFIG.oocAlpha)
@@ -1353,6 +1365,13 @@ function TWT.updateUI(from)
                     cr = (cr + 0.5) * 0.5
                     cg = (cg + 0.5) * 0.5
                     cb = (cb + 0.5) * 0.5
+                end
+                local sat = (TWT_CONFIG.saturation or 10) / 10
+                if sat ~= 1 then
+                    local avg = (cr + cg + cb) / 3
+                    cr = math.max(0, math.min(1, avg + (cr - avg) * sat))
+                    cg = math.max(0, math.min(1, avg + (cg - avg) * sat))
+                    cb = math.max(0, math.min(1, avg + (cb - avg) * sat))
                 end
                 bar:SetStatusBarColor(cr, cg, cb, 0.9)
                 bar.bg:SetStatusBarColor(0.2, 0.2, 0.2, 0.5)

@@ -730,6 +730,20 @@ function TWTUI.CreateSettings()
   bhSelector:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -8, -frame.entries * 18 - 4)
 
   frame:CreateConfig(L["Pastel Colors"], "pastel", "boolean")
+
+  -- Color Saturation (1-20, default 10 = 1.0x)
+  frame.entries = frame.entries + 1
+  local satText = frame:CreateFontString(nil, "OVERLAY", "GameFontWhite")
+  satText:SetPoint("TOPLEFT", frame, "TOPLEFT", 10, -frame.entries * 18 - 4)
+  satText:SetWidth(140)
+  satText:SetHeight(18)
+  satText:SetFont(STANDARD_TEXT_FONT, 10, "THINOUTLINE")
+  satText:SetJustifyH("LEFT")
+  satText:SetText(L["Color Saturation"])
+  local satSelector = CreateRangeSelector(frame, "saturation", 1, 20)
+  satSelector:ClearAllPoints()
+  satSelector:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -8, -frame.entries * 18 - 4)
+
   frame:CreateConfig(L["Show Backdrops"], "backdrop", "boolean")
 
   -- Warnings
