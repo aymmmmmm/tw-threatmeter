@@ -162,8 +162,3 @@ Turtle WoW 仇恨监控插件
 [Xerron/Er](https://github.com/MarcelineVQ/TWThreat) — TWThreat 原作者<br>
 v1.4.0 by anym — XML→Lua 架构重写、完整中文本地化、Bug 修复
 
-## 支持原作者
-如果你喜欢原作者的工作，可以请他喝杯咖啡！<br>
-https://ko-fi.com/xerron
-
-[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://paypal.me/xerroner)
