@@ -159,5 +159,5 @@ Turtle WoW 仇恨监控插件
 
 - **原作者**: [Xerron/Er](https://github.com/MarcelineVQ/TWThreat) — 原版 TWThreat 的开发者
 - **修改者**: [anym](https://github.com/aymmmmmm) — XML→Lua 架构重写、完整中文本地化、Bug 修复
-- **测试者**: [Henry](https://armory.turtle-wow.org/#!/character/Henry)、[Laughadin](https://armory.turtle-wow.org/#!/character/Laughadin)、[Faralynn](https://armory.turtle-wow.org/#!/character/Faralynn)、[Draxer](https://armory.turtle-wow.org/#!/character/Draxer)
+- **测试者**: [Henry](https://armory.turtle-wow.org/#!/character/Henry)、[Laughadin](https://armory.turtle-wow.org/#!/character/Laughadin)、[Faralynn](https://armory.turtle-wow.org/#!/character/Faralynn)、[Draxer](https://armory.turtle-wow.org/#!/character/Draxer)、[Marcoatbath](https://armory.turtle-wow.org/#!/character/Marcoatbath)
 
