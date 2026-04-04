@@ -337,11 +337,10 @@ function TWTUI.CreateMainWindow()
     if TWT_CONFIG then TWT_CONFIG.visible = false end
   end)
 
-  frame.btnClose.tex = frame.btnClose:CreateTexture()
-  frame.btnClose.tex:SetWidth(10)
-  frame.btnClose.tex:SetHeight(10)
-  frame.btnClose.tex:SetPoint("CENTER", 0, 0)
-  frame.btnClose.tex:SetTexture("Interface\\AddOns\\ShaguPlates\\img\\close")
+  frame.btnClose.caption = frame.btnClose:CreateFontString(nil, "OVERLAY", "GameFontWhite")
+  frame.btnClose.caption:SetFont(STANDARD_TEXT_FONT, 14)
+  frame.btnClose.caption:SetText("x")
+  frame.btnClose.caption:SetAllPoints()
 
   -- Lock/Unlock button
   frame.btnLock = CreateFrame("Button", "TWTMainLockButton", frame)
