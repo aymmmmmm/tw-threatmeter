@@ -39,7 +39,7 @@ TWT.tankModeApi = 'TMTv1=';
 TWT.UDTS = 'TWT_UDTSv4';
 
 TWT.showedUpdateNotification = false
-TWT.addonName = '|cffabd473TW|cff11cc11 |cffcdfe00Threatmeter'
+TWT.addonName = '|cffabd473TWThreat'
 
 TWT.prefix = 'TWT'
 TWT.channel = 'RAID'
@@ -2101,7 +2101,7 @@ end
 function TWT.updateTitleBarText(text)
     if not TWTUI.mainWindow or not TWTUI.mainWindow.caption then return end
     if not text then
-        TWTUI.mainWindow.caption:SetText(TWT.addonName .. ' |cffabd473v' .. TWT.addonVer)
+        TWTUI.mainWindow.caption:SetText(TWT.addonName)
         return true
     end
     TWTUI.mainWindow.caption:SetText(text)

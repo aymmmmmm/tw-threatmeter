@@ -662,7 +662,7 @@ function TWTUI.CreateSettings()
 
   frame.caption = frame:CreateFontString(nil, "OVERLAY", "GameFontWhite")
   frame.caption:SetFont(STANDARD_TEXT_FONT, 10, "OUTLINE")
-  frame.caption:SetText("|cffabd473TW|cffffffff Threat - " .. L["Settings"])
+  frame.caption:SetText(TWT.addonName .. " |cffabd473v" .. TWT.addonVer .. "|cffffffff - " .. L["Settings"])
   frame.caption:SetAllPoints(frame.title)
 
   -- Close button
