@@ -107,6 +107,7 @@ TWT.classColors = {
     ["priest"] = { r = 1, g = 1, b = 1, c = "|cffffffff" },
     ["warlock"] = { r = 0.58, g = 0.51, b = 0.79, c = "|cff9482c9" },
     ["paladin"] = { r = 0.96, g = 0.55, b = 0.73, c = "|cfff58cba" },
+    ["pet"] = { r = 0.3, g = 0.7, b = 0.3, c = "|cff4db84d" },
     ["agro"] = { r = 0.96, g = 0.1, b = 0.1, c = "|cffff1111" }
 }
 
@@ -120,6 +121,7 @@ TWT.classCoords = {
     ["shaman"] = { 0.27, 0.48, 0.27, 0.48 },
     ["warrior"] = { 0.02, 0.23, 0.02, 0.23 },
     ["paladin"] = { 0.02, 0.23, 0.52, 0.73 },
+    ["pet"] = { 0.02, 0.23, 0.27, 0.48 },
 }
 
 
@@ -756,9 +758,48 @@ function TWT.addInspectMenu(to)
 end
 
 TWT.classes = {}
+TWT.pets = {}
 
 function TWT.getClass(name)
-    return TWT.classes[name] or 'priest'
+    if TWT.classes[name] then return TWT.classes[name] end
+    local owner = TWT.pets[name]
+    if owner and TWT.classes[owner] then return TWT.classes[owner] end
+    if owner then return 'pet' end
+    return 'pet'
+end
+
+function TWT.getPets()
+    TWT.pets = {}
+    if UnitExists('pet') then
+        local petName = UnitName('pet')
+        if petName then
+            TWT.pets[petName] = TWT.name
+        end
+    end
+    if TWT.channel == 'RAID' then
+        for i = 1, GetNumRaidMembers() do
+            local unitId = 'raidpet' .. i
+            if UnitExists(unitId) then
+                local petName = UnitName(unitId)
+                local ownerName = UnitName('raid' .. i)
+                if petName and ownerName then
+                    TWT.pets[petName] = ownerName
+                end
+            end
+        end
+    end
+    if TWT.channel == 'PARTY' then
+        for i = 1, GetNumPartyMembers() do
+            local unitId = 'partypet' .. i
+            if UnitExists(unitId) then
+                local petName = UnitName(unitId)
+                local ownerName = UnitName('party' .. i)
+                if petName and ownerName then
+                    TWT.pets[petName] = ownerName
+                end
+            end
+        end
+    end
 end
 
 function TWT.getClasses()
@@ -782,6 +823,7 @@ function TWT.getClasses()
             end
         end
     end
+    TWT.getPets()
     twtdebug('classes saved')
     return true
 end
@@ -838,6 +880,10 @@ function TWT.handleThreatPacket(packet)
             buf.values[buf.head] = { time = now, threat = threat }
             if buf.size < TPS_BUFFER_SIZE then
                 buf.size = buf.size + 1
+            end
+
+            if not TWT.classes[player] and not TWT.pets[player] then
+                TWT.getPets()
             end
 
             TWT.threats[player] = {
