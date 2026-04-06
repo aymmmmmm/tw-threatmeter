@@ -266,6 +266,23 @@ SlashCmdList["TWT"] = function(msg)
     elseif cmd == "who" then
         TWT.queryWho()
         return
+    elseif cmd == "specinfo" then
+        local _, cl = UnitClass('player')
+        p('职业: ' .. cl)
+        for i = 2, 4 do
+            local name, texture = GetSpellTabInfo(i)
+            if name and texture then
+                local texParts = __explode(texture, '\\')
+                local texName = texParts[__getn(texParts)]
+                local talents = 0
+                for j = 1, GetNumTalents(i - 1) do
+                    local _, _, _, _, currRank = GetTalentInfo(i - 1, j)
+                    talents = talents + currRank
+                end
+                p('  天赋' .. (i-1) .. ': ' .. name .. ' | 图标: ' .. texName .. ' | 点数: ' .. talents)
+            end
+        end
+        return
     end
 
     p(L["Unknown command. Type /twt for help."])
@@ -763,7 +780,6 @@ TWT.pets = {}
 function TWT.getClass(name)
     if TWT.classes[name] then return TWT.classes[name] end
     local owner = TWT.pets[name]
-    if owner and TWT.classes[owner] then return TWT.classes[owner] end
     if owner then return 'pet' end
     return 'pet'
 end
@@ -803,6 +819,8 @@ function TWT.getPets()
 end
 
 function TWT.getClasses()
+    -- 添加玩家自己
+    TWT.classes[TWT.name] = TWT.class
     if TWT.channel == 'RAID' then
         for i = 0, GetNumRaidMembers() do
             if GetRaidRosterInfo(i) then
@@ -1332,8 +1350,8 @@ function TWT.updateUI(from)
                 bar.roleIcon:SetWidth(TWT_CONFIG.barHeight - 2)
                 bar.roleIcon:SetHeight(TWT_CONFIG.barHeight - 2)
                 bar.textLeft:SetPoint('LEFT', bar.roleIcon, 'RIGHT', 1 + (TWT_CONFIG.barHeight / 15), -1)
-                if TWT.roles[name] then
-                    bar.roleIcon:SetTexture('Interface\\Icons\\' .. TWT.roles[name])
+                if data.class == 'pet' then
+                    bar.roleIcon:SetTexture('Interface\\Icons\\Ability_Hunter_BeastCall')
                     bar.roleIcon:SetTexCoord(0.08, 0.92, 0.08, 0.92)
                     bar.roleIcon:Show()
                 else
