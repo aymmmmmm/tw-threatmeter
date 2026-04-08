@@ -1,9 +1,3 @@
--- [DEBUG] Capture load errors (remove after debugging)
-seterrorhandler(function(msg)
-    DEFAULT_CHAT_FRAME:AddMessage("|cffff0000[TWT LOAD ERROR] " .. tostring(msg))
-end)
-DEFAULT_CHAT_FRAME:AddMessage("|cff00ff00[TWT] Starting to load TWThreat.lua...")
-
 local _G, _ = _G or getfenv()
 
 -- todo tankmode messages to send if guid is target, for tankmode highlight

@@ -1,5 +1,3 @@
--- [DEBUG] If this line prints, the addon IS enabled and loading
-DEFAULT_CHAT_FRAME:AddMessage("|cffff00ff[TWT] locales.lua is loading - addon IS enabled")
 -- TWThreat Localization
 TWT_L = {}
 local L = TWT_L
