@@ -32,7 +32,6 @@ TWT.threatApi = 'TWTv4=';
 TWT.tankModeApi = 'TMTv1=';
 TWT.UDTS = 'TWT_UDTSv4';
 
-TWT.showedUpdateNotification = false
 TWT.addonName = '|cffabd473TWThreat'
 
 TWT.prefix = 'TWT'
@@ -364,16 +363,7 @@ eventHandlers.CHAT_MSG_ADDON = function()
 
     if arg1 == TWT.prefix then
         if __substr(arg2, 1, 11) == 'TWTVersion:' and arg4 ~= TWT.name then
-            if not TWT.showedUpdateNotification then
-                local verEx = __explode(arg2, ':')
-                if TWT.version(verEx[2]) > TWT.version(TWT.addonVer) then
-                    twtprint('New version available ' ..
-                            TWT.classColors[TWT.class].c .. 'v' .. verEx[2] .. ' |cffffffff(current version ' ..
-                            TWT.classColors['paladin'].c .. 'v' .. TWT.addonVer .. '|cffffffff)')
-                    twtprint('Update at ' .. TWT.classColors[TWT.class].c .. 'https://github.com/MarcelineVQ/TWThreat')
-                    TWT.showedUpdateNotification = true
-                end
-            end
+            -- 版本更新提示已移除：消息仍被识别吞掉，不再打印
             return true
         end
 
@@ -2206,6 +2196,3 @@ function TWT.sendMyVersion()
         SendAddonMessage(TWT.prefix, msg, "GUILD")
     end
 end
-
--- [DEBUG] Confirm successful load (remove after debugging)
-DEFAULT_CHAT_FRAME:AddMessage("|cff00ff00[TWT] TWThreat.lua loaded OK, TWT=" .. tostring(TWT) .. " type=" .. type(TWT))
